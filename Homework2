@@ -1,7 +1,7 @@
 provider "aws" {
   region                  = var.aws_region
   profile                 = "default"
-  shared_credentials_file = "C:\\Users\\adida\\.aws"
+  shared_credentials_file = "C:\\devbox"
 }
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -229,9 +229,53 @@ resource "aws_instance" "web_server" {
 
 
 
+####################Variables###################################################################################################################################################
+
+terraform {
+  required_version = ">= 0.12.0"
+}
+
+variable "aws_region" {
+  description = "AWS region"
+  default     = "us-east-1"
+
+}
+
+variable "ingress_ports" {
+  type        = list(number)
+  description = "list of ingress ports"
+  default     = [22]
+}
+
+variable "az_list" {
+ type    = list(string)
+ default = ["us-east-1a", "us-east-1b"]
+}
+
+variable "web_subnet_list" {
+  type    = list(string)
+  default = ["10.0.2.0/24", "10.0.4.0/24"]
+}
+
+variable "db_subnet_list_B" {
+  type    = list(string)
+  default = ["10.0.1.0/24", "10.0.3.0/24"]
+}
 
 
+###############Keys####################################################
+resource "tls_private_key" "webDBkey" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
 
+resource "aws_key_pair" "webDBkey" {
+  key_name   = "webDBkey"
+  public_key = tls_private_key.webDBkey.public_key_openssh
+}
 
-
+resource "local_file" "webDBkey" {
+  sensitive_content = tls_private_key.webDBkey.private_key_pem
+  filename          = "webDBkey.pem"
+}
 
