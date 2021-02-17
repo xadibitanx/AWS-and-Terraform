@@ -9,12 +9,12 @@ variable "region" {
 
 variable "vpc_id" {
   description = "AWS VPC id"
-  default     = "vpc-07ae0fbc5176bf195"
+  default     = "vpc-07"
 }
 
 variable "subnet_id" {
   description = "Consol Subnet id"
-  default     = "subnet-0050853bfdf06e747"
+  default     = "subnet-005"
 }
 variable "ingress_ports" {
   type        = list(number)
@@ -26,8 +26,8 @@ variable "ingress_ports" {
 variable "ami" {
   description = "ami (ubuntu 18) to use - based on region"
   default = {
-    "us-east-1" = "ami-00ddb0e5626798373"
-    "us-east-2" = "ami-0dd9f0e7df0f0a138"
+    "us-east-1" = "ami-00ddb0e562679837"
+    "us-east-2" = "ami-0dd9f0e7df0f0a13"
   }
 }
 
