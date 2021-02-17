@@ -75,9 +75,6 @@ resource "aws_instance" "nginx" {
 
   tags = {
     Name        = "nginx_web"
-    Environment = "Opsschool"
-	Owner = "Disel & Myna"
-
   }
 
 ###### Connection & Commands ########
@@ -93,7 +90,6 @@ resource "aws_instance" "nginx" {
     inline = [
       "sudo -i apt  install nginx -y",
       "sudo -i service nginx start",
-      "sudo -i sed -i 's/Welcome to nginx!/Oppschool Rules!/g' /var/www/html/index.nginx-debian.html",
       "sudo -i service nginx restart",
     ]
   }
